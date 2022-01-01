@@ -17,14 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for task in tasks %}
+            {% for ele in tasks %}
             <tr>
-                <td>{{ task.title }}</td>
-                <td>{{ task.deadline }}</td>
+                <td>{{ ele.title }}</td>
+                <td>{{ ele.deadline }}</td>
                 <td>
-                    <a href="{% url 'detail' task.pk %}">詳細</a>
-                    <a href="{% url 'update' task.pk %}">編集</a>
-                    <a href="{% url 'delete' task.pk %}">削除</a>
+                    <a href="{% url 'detail' ele.pk %}">詳細</a>
+                    <a href="{% url 'update' ele.pk %}">編集</a>
+                    <a href="{% url 'delete' ele.pk %}">削除</a>
                 </td>
             </tr>
             {% endfor %}

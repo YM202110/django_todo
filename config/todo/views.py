@@ -19,6 +19,11 @@ class TodoList(ListView):
 class TodoDetail(DetailView):
     model = Todo
     context_object_name = "task"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_name'] = 'Todo Detail'
+        context['message'] = '忘れずに完了させましょう'
+        return context
 
 class TodoCreate(CreateView):
     model = Todo

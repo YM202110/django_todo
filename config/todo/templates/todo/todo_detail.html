@@ -2,14 +2,14 @@
 
 {% block header %}
 <h1>{{ title_name }}</h1>
-<h5>{{ message }}</h5>
+<h6>{{ message }}</h6>
 {% endblock header %}
 
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <h2>{{ task.title }}</h2>
-        <p>{{ task.deadline }}</p>
+        <h2>{{ task.title }}_{{ task.category }}</h2>
+        <p>{{ task.deadline }}　≪{{ task.status }}≫</p>
         <p><small class="text-muted">{{ task.description }}</small></p>
     </div>
 </div>

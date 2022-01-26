@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TodoList, TodoDetail, TodoCreate, TodoUpdate, TodoDelete
+from .views import TodoList, TodoDetail, TodoCreate, TodoUpdate, TodoDelete, TodoListAfterCreate, TodoListAfterUpdate, TodoListAfterDelete
 
 urlpatterns = [
     # ユーザーがトップページにアクセスしたらTodoListを表示する、という処理
@@ -17,5 +17,9 @@ urlpatterns = [
     # タスクを削除するには個別タスクを選択する必要がある
     # nameはdeleteだが、ユーザーに返すページはtodo_delete.htmlではなく「todo_confirm_delete.html」
     path("delete/<int:pk>", TodoDelete.as_view(), name="delete"),
+
+    path("aftercreate/", TodoListAfterCreate.as_view(), name="aftercreate"),
+    path("afterupdate/", TodoListAfterUpdate.as_view(), name="afterupdate"),
+    path("afterdelete/", TodoListAfterDelete.as_view(), name="afterdelete"),
 
 ]

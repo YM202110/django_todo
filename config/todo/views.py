@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy, reverse
 
 from .models import Todo
+from .forms import TodoForm
 
 # Create your views here.
 def index(request):
@@ -30,16 +31,18 @@ class TodoDetail(DetailView):
 class TodoCreate(CreateView):
     # template_name = 'todo/todo_form.html'
     model = Todo
-    # fieldeで入力する項目を設定する。今回は「title」「description」「deadline」の全てを入力したいため「__all__」で全選択している
+    # form経由でmodelを編集するため、どのformと紐づけるか定義
+    form_class = TodoForm
+    # fieldで入力する項目を設定する。今回は「title」「description」「deadline」の全てを入力したいため「__all__」で全選択している
     # 1つずつ選択する場合の書き方は「fields = ['title', 'description', 'deadline']」。models.pyの定義通り。
-    fields = "__all__"
+#    fields = "__all__"
     # タスクが作成できたらreverse_lazy()でlistという名前のページに遷移させる
     # listは「todo_list.html」のことみたいだ
-    # success_url = reverse_lazy("list")
+    success_url = reverse_lazy("aftercreate")
 
     # detailに遷移させる場合は、個別ページのurlが必要だから以下のようにする
-    def get_success_url(self):
-        return reverse_lazy("detail", kwargs={'pk':self.object.pk})
+    # def get_success_url(self):
+    #     return reverse_lazy("detail", kwargs={'pk':self.object.pk})
     
     # csrf_tokenを無効化したいときは以下のコードを記載する
     # @method_decorator(csrf_exempt)
@@ -48,10 +51,28 @@ class TodoCreate(CreateView):
 
 class TodoUpdate(UpdateView):
     model = Todo
-    fields = "__all__"
-    success_url = reverse_lazy("list")
+    form_class = TodoForm
+#    fields = "__all__"
+    success_url = reverse_lazy("afterupdate")
 
 class TodoDelete(DeleteView):
     model = Todo
     context_object_name = "task"
-    success_url = reverse_lazy("list")
+    success_url = reverse_lazy("afterdelete")
+
+
+
+class TodoListAfterCreate(ListView):
+    template_name = "todo/after_create.html"
+    model = Todo
+    context_object_name = "tasks"
+
+class TodoListAfterUpdate(ListView):
+    template_name = "todo/after_update.html"
+    model = Todo
+    context_object_name = "tasks"
+
+class TodoListAfterDelete(ListView):
+    template_name = "todo/after_delete.html"
+    model = Todo
+    context_object_name = "tasks"

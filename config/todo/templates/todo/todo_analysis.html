@@ -1,0 +1,26 @@
+{% extends 'todo/base.html' %}
+
+{% block header %}
+<h1><div class="mt-5">Todo List Analysis</div></h1>
+<small class="text-muted">完了したタスクの数を確認しましょう</small>
+{% endblock header %}
+
+{% block content %}
+{% for error in form.non_field_errors %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endfor %}
+
+<form action="" method="POST">{% csrf_token %}
+   <div>
+        対象期間：{{ form.start_day }} ～ {{form.end_day}}
+   </div>
+   <br>
+   <input class="btn btn-info text-white" type="submit" Value="グラフを表示">
+   <a class="btn btn-outline-secondary" href="{% url 'list' %}" role="button">Topへ戻る</a>
+</form>
+<div>
+    <img src="data:image/png;base64,{{ chart| safe }}" onerror="this.style.display='none'"/>
+</div>
+{% endblock content %}

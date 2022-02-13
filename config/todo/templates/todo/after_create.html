@@ -1,9 +1,19 @@
 {% extends 'todo/base.html' %}
+{% load extra_tags %}
 
 {% block header %}
 <h1><div class="mt-5">Todo List</div></h1>
-<p class="p-3 mb-4 bg-info text-white fw-bold h5" align="center">タスクが新たに追加されました</p>
+<small class="text-muted">今日のタスクを作成しましょう！</small>
+
+<p class="text-primary fw-bold h2" align="center">
+    {% for task in tasks %}    
+    {% add_message task.updated_at|date:'y/m/d H:i:s' %}
+    {% endfor %}
+</p>
+
+<br>
 <a class="btn btn-primary" href="{% url 'create' %}">新規作成</a>
+<a class="btn btn-info text-white" href="{% url 'analysis' %}">データ分析</a>
 {% endblock header %}
 
 {% block content %}
@@ -11,6 +21,7 @@
     <table class="table">
         <thead>
             <tr>
+            <th scope="col"></th>
             <th scope="col">タイトル</th>
             <th scope="col">締切日</th>
             <th scope="col">処理状況</th>
@@ -21,6 +32,7 @@
             {% for task in tasks %}
             {% if task.status|stringformat:"s" != "完了済" %}
             <tr>
+                <td class="text-primary text-center h5">{% time_judge task.updated_at|date:'y/m/d H:i:s' %}</td>
                 <td>{{ task.title }}</td>
                 <td>{{ task.deadline }}</td>
                 <td>{{ task.status }}</td>

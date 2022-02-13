@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TodoList, TodoDetail, TodoCreate, TodoUpdate, TodoDelete, TodoListAfterCreate, TodoListAfterUpdate, TodoListAfterDelete
+from .views import TodoAnalysis, TodoList, TodoDetail, TodoCreate, TodoUpdate, TodoDelete, TodoListAfterCreate, TodoListAfterUpdate, TodoListAfterDelete, TodoAnalysis
 
 urlpatterns = [
     # ユーザーがトップページにアクセスしたらTodoListを表示する、という処理
@@ -21,5 +21,6 @@ urlpatterns = [
     path("aftercreate/", TodoListAfterCreate.as_view(), name="aftercreate"),
     path("afterupdate/", TodoListAfterUpdate.as_view(), name="afterupdate"),
     path("afterdelete/", TodoListAfterDelete.as_view(), name="afterdelete"),
+    path("analysis/", TodoAnalysis.as_view(), name="analysis"),
 
 ]

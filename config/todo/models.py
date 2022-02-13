@@ -49,6 +49,15 @@ class Todo(models.Model):
         on_delete=models.CASCADE,
         verbose_name="処理状況")
     
+    created_at = models.DateTimeField(
+        verbose_name="登録日時", 
+        auto_now_add=True)
+
+    updated_at = models.DateTimeField(
+        verbose_name="更新日時",
+        auto_now=True
+    )
+    
 
     def __str__(self):
         return self.title

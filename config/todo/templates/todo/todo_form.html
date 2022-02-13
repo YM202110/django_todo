@@ -1,5 +1,21 @@
 {% extends 'todo/base.html' %}
 
+{% block extrahead %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        // 日付は、年-月-日 の形式でお願いする。
+        let dateFormat = 'yy-mm-dd';
+        $('#id_deadline').datepicker({
+            dateFormat: dateFormat
+        });
+    });
+</script>
+{% endblock extrahead %}
+
+
 {% block header %}
 <h1><div class="mt-5">タスクの作成/編集</div></h1>
 {% endblock header %}
@@ -19,13 +35,13 @@
                 </tr>
                 <tr>
                     <th width="150" height="50">{{ form.deadline.label_tag }}</th>
-                    <td>{{ form.deadline }}</td>
+                    <td><div>{{ form.deadline }}</div></td>
                 </tr>
                 <tr>
                     <th width="150" height="50">{{ form.category.label_tag }}</th>
                     <td>
                         {% for radiobutton in form.category %}
-                            {{ radiobutton }}　
+                            {{ radiobutton }}
                         {% endfor %}
                     </td>
                 </tr>
@@ -33,7 +49,7 @@
                     <th width="150">{{ form.status.label_tag }}</th>
                     <td>
                         {% for radiobutton in form.status %}
-                            {{ radiobutton }}　
+                            {{ radiobutton }}
                         {% endfor %}
                     </td>
                 </tr>
@@ -44,3 +60,4 @@
    <input class="btn btn-success" type="submit" Value="送信">
 </form>
 {% endblock content %}
+

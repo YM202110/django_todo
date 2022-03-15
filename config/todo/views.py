@@ -94,6 +94,9 @@ class TodoAnalysis(FormView):
     template_name = "todo/todo_analysis.html"
     
     def form_valid(self, form):
+        """
+        棒グラフを作成するためのコード
+        """
         # formのclean関数を経てから日付を受取る
         period = form.cleaned_data
         start_day = period["start_day"]
@@ -118,10 +121,32 @@ class TodoAnalysis(FormView):
         # グラフのx軸とy軸用のデータを格納する
         x = [x for x in tasks.keys()]
         y = [y for y in tasks.values()]
-        chart = graph.Plot_Graph(x, y)
+        chart = graph.Plot_BarGraph(x, y)
+
+
+        """
+        円グラフを作成するためのコード（qsは棒グラフ部分より流用）
+        """
+        # 納品物がいくつか、社内タスクがいくつか、などの数の辞書を作る
+        cate = {}
+        # qsのupdated_atの時間情報を修正してみる
+        for ele2 in qs:
+            xx = pd.DataFrame({'time':[localtime(ele2.updated_at)]})
+            xx['time'] = pd.to_datetime(xx['time']).dt.date
+            if xx['time'][0] in tasks and str(ele2.status) == "完了済":
+                if ele2.category in cate:
+                    cate[ele2.category] += 1
+                else:
+                    cate[ele2.category] = 1
+        pie = [pie for pie in cate.values()]
+        label = [label for label in cate.keys()]
+        chart2 = graph.Plot_PieChart(pie, label)
+
+
 
         # ここで引数に渡せば、上記のどの変数もテンプレートに渡せる（以下ではchartをchart(オレンジ)の名前で渡しているし、formもformで送ってる）
-        ctxt = self.get_context_data(chart=chart, form=form, y=y)
+        # ただし同じtodo_analysis.html内にしか渡せていない
+        ctxt = self.get_context_data(chart=chart, chart2=chart2, form=form, y=y)
 
         return self.render_to_response(ctxt)
 

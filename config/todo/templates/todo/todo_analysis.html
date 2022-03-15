@@ -20,7 +20,16 @@
    <input class="btn btn-info text-white" type="submit" Value="グラフを表示">
    <a class="btn btn-outline-secondary" href="{% url 'list' %}" role="button">Topへ戻る</a>
 </form>
-<div>
-    <img src="data:image/png;base64,{{ chart| safe }}" onerror="this.style.display='none'"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="data:image/png;base64,{{ chart| safe }}" onerror="this.style.display='none'"/>
+        </div>
+        <div class="col">
+            <img src="data:image/png;base64,{{ chart2| safe }}" onerror="this.style.display='none'"/>
+        </div>
+    </div>
 </div>
+
 {% endblock content %}

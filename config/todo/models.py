@@ -58,6 +58,6 @@ class Todo(models.Model):
         auto_now=True
     )
     
-
+    # def __str__(self)により、管理画面に表示されるモデル内のデータを判別するための、名前を定義することができる
     def __str__(self):
         return self.title
